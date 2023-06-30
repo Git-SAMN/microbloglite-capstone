@@ -9,17 +9,11 @@ const createNewPostBtn = document.getElementById("createNewPostBtn");
 const createNewPostBtn2 = document.getElementById("createNewPostBtn2"); 
 let loginData;
 
-/*----------------USER NEEDS TO BE LOGGED IN BEFORE ENTERING -------------------*/
-
-
 /*---------------PAGE LOADS IF USER IS LOGGED IN----------------------*/
 window.onload = function () {
   loginData = getLoginData();
 
   console.log("Page is loading....");
-  //logoutBtn.onclick = logoutBtnClicked;
-   //commentBtn.onclick = commentBtnClicked;
-  //createPostsBtn.onclick = createPostsBtnClicked;
 createNewPostBtn.onclick = createNewPost;
 loadFilteredPosts();
 };
@@ -44,7 +38,7 @@ function createNewPostBtnClicked(){
   console.log("I am Clicked!")
 }
 
-function createPostsBtnClicked (post, createNewPostBtnSvg) {
+function createPostsBtnClicked ( ) {
   console.log("create new post button has been clicked"); 
 
 }
@@ -52,8 +46,7 @@ function createPostsBtnClicked (post, createNewPostBtnSvg) {
 
 /*----------------------VIEW ALL POSTS-----------------------*/
 function loadFilteredPosts(){
-  let authToken = getLoginData().token; //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkNvbXB1dGVyTmVyZCIsImlhdCI6MTY4ODEzMzU1NiwiZXhwIjoxNjg4MjE5OTU2fQ.kSZ03jY4vGQ5arjsFcq6p4eajfI0K26VGUHEbedZPC0" //this will need to be retreived from web storage, the login page should have put it in place.   At page startup if the user is not logged in with a valid token they should have
-  // been redirected to the login page so we should not be here without a valid auth token.
+  let authToken = getLoginData().token;
   console.log("inside of the view all posts...");
   let options = {
     method: "GET",
@@ -162,14 +155,14 @@ function createNewPost() {
   //you can use your function loadFilteredPosts(); to refresh the posts.
 
 
-  let authToken = loginData.token //  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkNvbXB1dGVyTmVyZCIsImlhdCI6MTY4ODEzMzU1NiwiZXhwIjoxNjg4MjE5OTU2fQ.kSZ03jY4vGQ5arjsFcq6p4eajfI0K26VGUHEbedZPC0";
+  let authToken = loginData.token 
   let options = {
     method: "POST",
     headers: {
       Authorization: `Bearer ${authToken}`,
       "Content-Type": "application/json" // Add the content type header
     },
-    //body: JSON.stringify(bodyData) // Convert the bodyData to JSON string
+    
   };
   fetch("https://microbloglite.herokuapp.com/api/posts", options)
     .then(response => {
@@ -188,9 +181,6 @@ function createNewPost() {
             text: userInput,
             createdAt: createdPost.created,
           };
-  
-          // Update the options object with the updated bodyData
-          //options.body = JSON.stringify(bodyData);
   
           // Send the updated POST request with the user's input
           return fetch("https://microbloglite.herokuapp.com/api/posts", options);
@@ -216,10 +206,9 @@ function createNewPost() {
 
   
   /*---------------------------------LOGS OUT USER WHEN CLICKED-------------------------------------------------------------------*/
-  
+
 function logoutBtnClicked () {
-  let authToken = loginData.token //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkNvbXB1dGVyTmVyZCIsImlhdCI6MTY4ODEzMzU1NiwiZXhwIjoxNjg4MjE5OTU2fQ.kSZ03jY4vGQ5arjsFcq6p4eajfI0K26VGUHEbedZPC0"
-  // // GET /auth/logout
+  let authToken = loginData.token 
   const options = {
     method: "GET",
     headers: {
